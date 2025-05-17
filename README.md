@@ -10,9 +10,13 @@ Enhanced Discovery: Genre filtering, real-time search, and AI-driven recommendat
 Rich Media Experience: Detailed overlays with trailers, ratings, metadata, and "Add to List" functionality
 
 Users enjoy:
+
 ✅ Cross-device sync via localStorage
+
 ✅ Rating system (1-5 stars) influencing recommendations
+
 ✅ Watch history tracking with progress indicators
+
 ✅ Responsive design optimized for all screens
 
 Developers benefit from:
