@@ -266,7 +266,7 @@ function createMediaCard(item) {
     mediaType = item.media_type || (item.title ? 'movie': 'tv');
 
     return `
-    <div class="media-card"
+    <div class="media-card tilt-element"
     data-media-id="${item.id}"
     data-media-type="${mediaType}"> <!-- Correct attribute -->
     <img src="${item.poster_path ? IMAGE_BASE_URL + item.poster_path: 'https://via.placeholder.com/300x450?text=No+Poster'}"
@@ -755,3 +755,41 @@ async function addToCurrentList(listKey) {
     refreshListUI();
     closeDetailOverlay();
 }
+
+document.querySelectorAll('.tilt-element').forEach(element => {
+    const maxTilt = 20; // Maximum tilt in degrees
+    const perspective = 1000; // Perspective value in pixels
+
+    element.addEventListener('mouseenter', () => {
+      element.style.transition = 'transform 0.3s';
+    });
+
+    element.addEventListener('mouseleave', () => {
+      element.style.transition = 'transform 0.3s';
+      element.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg)`;
+      
+      // Remove transition after animation completes
+      setTimeout(() => {
+        element.style.transition = 'none';
+      }, 300);
+    });
+
+    element.addEventListener('mousemove', (e) => {
+      const rect = element.getBoundingClientRect();
+      const width = element.offsetWidth;
+      const height = element.offsetHeight;
+
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      
+      // Calculate rotation values
+      const rotateY = ((mouseX - width/2) / (width/2)) * maxTilt;
+      const rotateX = ((height/2 - mouseY) / (height/2)) * maxTilt;
+
+      element.style.transform = `
+        perspective(${perspective}px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+      `;
+    });
+  });
