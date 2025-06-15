@@ -3,142 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieFlix - Stream Movies & TV Shows</title>
-    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <title>Happy Father's Day</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a6fc4);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        
+        .card-container {
+            perspective: 1500px;
+            margin: 30px;
+        }
+        
+        .card {
+            position: relative;
+            width: 400px;
+            height: 670px;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #0d4a8a, #1a6fc4);
+            color: white;
+        }
+        
+        .card-back {
+            background: linear-gradient(45deg, #f5f5f5, #e0e0e0);
+            transform: rotateY(180deg);
+            color: #333;
+        }
+        
+        .card-title {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+        
+        .decoration {
+            position: absolute;
+            opacity: 0.15;
+        }
+        
+        .decoration.tie {
+            bottom: -30px;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L50,80 L80,20 Z" fill="white"/></svg>') no-repeat;
+        }
+        
+        .decoration.mustache {
+            top: 50px;
+            left: 30px;
+            width: 100px;
+            height: 50px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M20,30 Q40,10 60,30 Q80,50 50,40 Q20,50 40,30 Z" fill="white"/></svg>') no-repeat;
+        }
+        
+        .decoration.hammer {
+            top: 150px;
+            right: 40px;
+            width: 80px;
+            height: 80px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="30" y="10" width="10" height="50" fill="white"/><rect x="15" y="60" width="40" height="10" fill="white"/><rect x="20" y="20" width="30" height="10" fill="white"/></svg>') no-repeat;
+        }
+        
+        .heart {
+            color: #e74c3c;
+            animation: heartbeat 1.2s infinite;
+            margin: 0 5px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #1a6fc4;
+            margin-top: 20px;
+            font-weight: 700;
+        }
+        
+        .photo-frame {
+            width: 180px;
+            height: 180px;
+            border: 8px solid #1a6fc4;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #1a6fc4, #0d4a8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo-placeholder {
+            color: white;
+            font-size: 4rem;
+            text-align: center;
+        }
+        
+        .interactive-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: #1a6fc4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .interactive-btn:hover {
+            background: #0d4a8a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f1c40f;
+            opacity: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                width: 340px;
+                height: 480px;
+            }
+            
+            .card-title {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="logo">MOVIEFLIX</a>
-            <div class="nav-links">
-                <a href="#" class="nav-link active" data-type="home">Home</a>
-                <a href="#" class="nav-link" data-type="movie">Movies</a>
-                <a href="#" class="nav-link" data-type="tv">TV Series</a>
-                <a href="#" class="nav-link" data-type="my-list">My List</a>
-            </div>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Unlimited Entertainment</h1>
-            <p>
-                Stream your favorite movies and TV shows anytime
-            </p>
-            <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Search..." id="search-input">
-                <div class="filter-container">
-                    <div class="genre-filter" id="genre-filter"></div>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-front">
+                <div class="decoration tie"></div>
+                <div class="decoration mustache"></div>
+                <div class="decoration hammer"></div>
+                
+                <h1 class="card-title">Happy Father's Day</h1>
+                <p class="subtitle">To the world's greatest Dad</p>
+                
+                <div class="photo-frame">
+                    <div class="photo-placeholder">👨</div>
                 </div>
+                
+                <p class="subtitle">Tap to open your card</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Content Sections -->
-    <div class="content-section active" id="home-section">
-        <h2 class="section-title">Trending Now</h2>
-        <div class="loader" id="home-loader"></div>
-        <div class="error-message" id="home-error"></div>
-        <div class="media-grid" id="home-grid"></div>
-    </div>
-
-    <div class="content-section" id="movie-section">
-        <h2 class="section-title">Popular Movies</h2>
-        <div class="loader" id="movie-loader"></div>
-        <div class="error-message" id="movie-error"></div>
-        <div class="media-grid" id="movie-grid"></div>
-    </div>
-
-    <div class="content-section" id="tv-section">
-        <h2 class="section-title">Popular TV Series</h2>
-        <div class="loader" id="tv-loader"></div>
-        <div class="error-message" id="tv-error"></div>
-        <div class="media-grid" id="tv-grid"></div>
-    </div>
-
-    <div class="content-section" id="my-list-section">
-        <div class="auth-container" id="auth-container">
-            <div id="login-form">
-                <h2 class="section-title">Login</h2>
-                <form class="auth-form" id="login">
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
-                </form>
-                <p class="auth-toggle" onclick="showRegister()">
-                    Need an account? Register here
+            
+            <div class="card-back">
+                <h1 class="card-title" style="color: #1a6fc4;">Dear Dad,</h1>
+                
+                <p class="message">
+                    On this special day, I want to thank you for everything you've done for our family. 
+                    Your strength, wisdom, and unconditional love have shaped who I am today. 
+                    You've taught me valuable life lessons and shown me what it means to be a good person.
                 </p>
-            </div>
-
-            <div id="register-form" style="display: none;">
-                <h2 class="section-title">Register</h2>
-                <form class="auth-form" id="register">
-                    <input type="text" placeholder="Name" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-                    <button type="submit">Create Account</button>
-                </form>
-                <p class="auth-toggle" onclick="showLogin()">
-                    Already have an account? Login here
+                
+                <p class="message">
+                    Thank you for the laughter, guidance, and support through all of life's adventures. 
+                    I cherish every moment we've shared and look forward to creating many more memories together.
                 </p>
-            </div>
-        </div>
-
-        <div class="list-management">
-            <button id="create-list-btn" class="list-action-btn">➕ Create New List</button>
-            <div class="list-selection" id="list-selection"></div>
-        </div>
-
-        <div class="media-grid" id="my-list-grid" style="display: none;">
-            <!-- Content will be injected here -->
-        </div>
-    </div>
-
-    <div class="detail-overlay" id="detail-overlay">
-        <div class="detail-content">
-            <button class="detail-close" id="detail-close">&times;</button>
-            <img src="" class="detail-poster" id="detail-poster" alt="Media Poster">
-            <div class="detail-info">
-                <div>
-                    <h1 class="detail-title" id="detail-title"></h1>
-                    <div class="detail-meta">
-                        <span id="detail-year"></span> •
-                        <span id="detail-runtime"></span> •
-                        ⭐<span id="detail-rating"></span>
-                    </div>
-                    <div class="detail-genres" id="detail-genres"></div>
-                    <button class="watch-later-btn" id="watch-later-btn">
-                        Add to Watch Later
-                    </button>
-                    <div class="list-actions">
-                        <select id="list-selector">
-                            <option value="">Add to List...</option>
-                        </select>
-                        <button id="confirm-add-list">Add</button>
-                    </div>
-                </div>
-                <div>
-                    <p class="detail-overview" id="detail-overview"></p>
-                    <div class="detail-meta" id="detail-extra"></div>
-                </div>
-            </div>
-        </div>
-        <div class="trailer-container" id="trailer-container">
-            <iframe class="trailer-iframe" id="trailer-iframe"
-                frameborder="0" allowfullscreen></iframe>
-            <div class="no-trailer" id="no-trailer">
-                No trailer available
+                
+                <p class="message">
+                    You're my hero, my mentor, and my friend. I love you more than words can express! 
+                    <span class="heart">❤️</span>
+                </p>
+                
+                <div class="signature">With love, Your Child</div>
+                
+                <button class="interactive-btn" id="confetti-btn">Celebrate Dad!</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js" type="text/javascript" charset="utf-8"></script>
-
-    <!-- Attribution -->
-    <footer id="footer"style="text-align: center; padding: 2rem; color: #03624c;">
-        <p>
-            &copy; 2025 MovieFlix. All rights are reserved.
-        </p>
-    </footer>
+    <script>
+        // Create confetti effect
+        document.getElementById('confetti-btn').addEventListener('click', function() {
+            const colors = ['#e74c3c', '#1a6fc4', '#2ecc71', '#f1c40f', '#9b59b6'];
+            const card = document.querySelector('.card');
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = Math.random() * 100 + 'vh';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                document.body.appendChild(confetti);
+                
+                // Animate confetti
+                confetti.animate([
+                    { opacity: 0, transform: 'translateY(0) rotate(0deg)' },
+                    { opacity: 1, transform: `translateY(-${Math.random() * 100 + 50}px) rotate(180deg)` },
+                    { opacity: 0, transform: `translateY(-${Math.random() * 200 + 100}px) rotate(360deg)` }
+                ], {
+                    duration: Math.random() * 2000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        });
+        
+        // Add click functionality for mobile
+        document.querySelector('.card').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+    </script>
 </body>
 </html>
